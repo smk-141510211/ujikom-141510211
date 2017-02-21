@@ -58,8 +58,8 @@ class kategori_lemburController extends Controller
                'besaran_uang.numeric'=>'input angka',
                'besaran_uang.min'=>'min 0',
                'jabatan_id.required'=>'tidak boleh kosong',
-               'golongan_id.required'=>'tidak boleh kosong', 
-               
+               'golongan_id.required'=>'tidak boleh kosong',
+
 
                ];
         $kirim=Validator::make(Input::all(),$definisi,$sms);

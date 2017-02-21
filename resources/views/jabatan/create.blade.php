@@ -4,7 +4,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <center>
-                <h3>MY APPLICATION</h3>
+                <h3>PAYROLL APPLICATION</h3>
                 <h5>HALAMAN WEB</h5>
                 <div class="collapse navbar-collapse">
                     <!-- Left Side Of Navbar -->

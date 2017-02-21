@@ -63,7 +63,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                 <center>
-                <h3>MY APPLICATION</h3>
+                <h3>PAYROLL APPLICATION</h3>
                     <h5>SELAMAT DATANG {{auth::user()->name }}</h5>
                 </div>
             </div>
@@ -74,8 +74,8 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <center>
-                <h3>MY APPLICATION</h3>
-                <h5>HALAMAN WEB</h5>
+                <h3>PAYROLL APPLICATION</h3>
+                <h5>WEB PAGE</h5>
                 <div class="collapse navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">

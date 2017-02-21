@@ -72,7 +72,7 @@
                     <input type="text" name="name" placeholder="Cari">
                     <input class="btn btn-sm btn-primary" type="submit" value="Cari" /></form>
                 </center></div>
-
+                
 <a href="{{url('/pegawai/create')}}"class="btn btn-primary form-control">Tambah Data</a>
 <br><br>
 	<thead>

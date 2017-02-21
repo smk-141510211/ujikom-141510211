@@ -96,7 +96,7 @@
                                        <option>Pegawai</option>
                                    </select>
                             </div>
-
+ 
                             <div class="col-md-6">
                                 <label >Password</label>
                                     <input id="password" type="password" class="form-control" name="password" autofocus>
