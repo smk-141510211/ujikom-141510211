@@ -1,27 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Http\Controllers\Controller;
+use App\jabatanModel;
 use Request;
-use App\Jabatan;
-use Html;
 use Validator;
-use Form;
 use Input;
-
-class JabatanController extends Controller
+class jabatanController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     /**
      * Display a listing of the resource.
      *
@@ -29,23 +14,10 @@ class JabatanController extends Controller
      */
     public function index()
     {
-        if (isset($_GET['search'])) {
-            $datas = Jabatan::where($_GET['field'],'LIKE','%'.$_GET['search'].'%')->orderBy($_GET['field'])->paginate(100);
-            $search = $_GET['search'];
-            $field_old = $_GET['field'];
-        }
-        else if(isset($_GET['sortBy']))
-        {
-            $datas = Jabatan::orderBy($_GET['sortBy'])->paginate(5);
-        }
-        else{
-            $datas = Jabatan::orderBy('created_at','DESC')->paginate(5);
-        }
-        $fields = (['id','kode_jabatan','nama_jabatan','tunjangan_uang']);
-        // dd($datas);
-
-        return view('crud.jabatan.index', compact('datas','fields','search','field_old'));
+        $jabatan=jabatanModel::paginate(10);
+        return view('jabatan.index',compact('jabatan'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -54,7 +26,8 @@ class JabatanController extends Controller
      */
     public function create()
     {
-        return view('crud.jabatan.create');
+        $jabatan=jabatanModel::all();
+        return view('jabatan.create',compact('jabatan'));
         //
     }
 
@@ -66,27 +39,28 @@ class JabatanController extends Controller
      */
     public function store(Request $request)
     {
-        $validati = array(
-            'kode_jabatan'=>'required|unique:jabatans',
-            'nama_jabatan'=>'required',
-            'tunjangan_uang'=>'required|max:12'
-            );
-        $alert = array(
-            'kode_jabatan.unique'=>'Please refresh browser and input again',
-            );
 
-        $validation = Validator::make(Request::all(), $validati,$alert);
+        $definisi=['kode_jabatan'=>'required|unique:jabatan',
+                   'nama_jabatan'=>'required',
+                   'besaran_uang'=>'required|numeric|min:0'];
 
-        if ($validation->fails()) {
-            return redirect('jabatan/create')->withErrors($validation)->withInput();
-            
+
+        $sms=['kode_jabatan.required'=>'tidak boleh kosong',
+               'kode_jabatan.unique'=>'data tidak boleh sama',
+               'nama_jabatan.required'=>'tidak boleh kosong',
+               'besaran_uang.required'=>'tidak boleh kosong',
+               'besaran_uang.numeric'=>'input angka',
+               'besaran_uang.min'=>'min 0',
+
+               ];
+
+        $kirim=Validator::make(Input::all(),$definisi,$sms);
+        if ($kirim->fails()) {
+            return redirect('jabatan/create')->withErrors($kirim)->withInput();
         }
-
-        // dd(Request::all());
-
-        Jabatan::create(Request::all());
+       $jabatan=Request::all();
+        jabatanModel::create($jabatan);
         return redirect('jabatan');
-        //
     }
 
     /**
@@ -97,13 +71,8 @@ class JabatanController extends Controller
      */
     public function show($id)
     {
-        $data = Jabatan::where('id',$id)->with('pegawai')->first();
-
-        // dd($data);
-
-        return view('crud.jabatan.view',compact('data'));
         //
-    }
+            }
 
     /**
      * Show the form for editing the specified resource.
@@ -113,11 +82,10 @@ class JabatanController extends Controller
      */
     public function edit($id)
     {
-        $data = Jabatan::where('id',$id)->first();
-        // dd($data);
-
-        return view('crud.jabatan.edit', compact('data'));
         //
+
+        $jabatan=jabatanModel::find($id);
+        return view('jabatan.edit',compact('jabatan'));
     }
 
     /**
@@ -129,43 +97,38 @@ class JabatanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = Request::all();
-        // dd($data);
-        $kode_lama = Jabatan::where('id', $id)->first()->kode_jabatan;
-
-        if ($data['kode_jabatan'] != $kode_lama)
-        {
-        $validati = array(
-            'kode_jabatan'=>'required|unique:jabatans',
-            'nama_jabatan'=>'required',
-            'tunjangan_uang'=>'required|max:12'
-            );
+        //
+        $cariid=jabatanModel::find($id);
+        if ($cariid->kode_jabatan != Request('kode_jabatan')) {
+            
+         $definisi=['kode_jabatan'=>'required|unique:jabatan',
+                   'nama_jabatan'=>'required',
+                   'besaran_uang'=>'required|numeric|min:0'];
         }
         else{
-        $validati = array(
-            'nama_jabatan'=>'required',
-            'tunjangan_uang'=>'required|max:12'
-            );
-        }
-        $alert = array(
-            'kode_jabatan.unique'=>'Please refresh browser and input again',
-            );
-
-        $validation = Validator::make(Request::all(), $validati, $alert);
-
-        if ($validation->fails()) {
-            return redirect('jabatan/'.$id.'/edit')->withErrors($validation)->withInput();
-            
+         $definisi=['kode_jabatan'=>'required',
+                   'nama_jabatan'=>'required',
+                   'besaran_uang'=>'required|numeric|min:0'];
         }
 
-        Jabatan::where('id', $id)->first()->update([
-            'kode_jabatan'=> $data['kode_jabatan'],
-            'nama_jabatan'=> $data['nama_jabatan'],
-            'tunjangan_uang'=> $data['tunjangan_uang']
-            ]);
-        $url = 'jabatan/'.$id;
-        return redirect($url);
-        //
+
+        $sms=['kode_jabatan.required'=>'tidak boleh kosong',
+               'kode_jabatan.unique'=>'data tidak boleh sama',
+               'nama_jabatan.required'=>'tidak boleh kosong',
+               'besaran_uang.required'=>'tidak boleh kosong',
+               'besaran_uang.numeric'=>'input angka',
+               'besaran_uang.min'=>'min 0',
+
+               ];
+
+        $kirim=Validator::make(Input::all(),$definisi,$sms);
+        if ($kirim->fails()) {
+            return redirect('jabatan/'.$cariid->id.'/edit')->withErrors($kirim)->withInput();
+        }
+        $dataUpdate=Request::all();
+        $jabatan=jabatanModel::find($id);
+        $jabatan->update($dataUpdate);
+        return redirect('jabatan');
     }
 
     /**
@@ -176,9 +139,8 @@ class JabatanController extends Controller
      */
     public function destroy($id)
     {
-        Jabatan::where('id',$id)->first()->delete();
-
-        return redirect('jabatan');
         //
+        jabatanModel::find($id)->delete();
+        return redirect('jabatan');
     }
 }

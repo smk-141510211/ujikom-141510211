@@ -11,27 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Auth::routes(); 
 
-Route::get('/', 'HomeController@index');
+Auth::routes();
 
-// User
-Route::resource('pegawai','PegawaiController');
+Route::get('/','HomeController@index');
+Route::get('home','HomeController@index');
 
-Route::resource('jabatan','JabatanController');
-Route::resource('golongan','GolonganController');
-
-// Lembur
-Route::resource('lembur_pegawai','LemburPegawaiController');
-Route::resource('kategori_lembur','KategoriLemburController');
-
-// Tunjangan
-Route::resource('tunjangan','TunjanganController');
-Route::resource('tunjangan_pegawai','TunjanganPegawaiController');
-
-// Penggajian
-Route::resource('penggajian','PenggajianController');
+Route::get('/index1','bbController@index1');
+Route::resource('/pegawai','pegawaiController');
+Route::resource('/jabatan','jabatanController');
+Route::resource('/golongan','golonganController');
+Route::resource('/tunjangan','tunjanganController');
+Route::resource('/kategori_lembur','kategori_lemburController');
+Route::resource('/lembur_pegawai','lembur_pegawaiController');
+Route::resource('/tunjangan_pegawai','tunjangan_pegawaiController');
+Route::resource('/penggajian','penggajianController');

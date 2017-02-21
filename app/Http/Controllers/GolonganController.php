@@ -1,24 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\golonganModel;
 use Request;
-use App\Http\Controllers\Controller;
-use App\Golongan;
 use Validator;
-
-class GolonganController extends Controller
+use Input;
+class golonganController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     /**
      * Display a listing of the resource.
      *
@@ -26,22 +14,9 @@ class GolonganController extends Controller
      */
     public function index()
     {
-        if (isset($_GET['search'])) {
-            $datas = Golongan::where($_GET['field'],'LIKE','%'.$_GET['search'].'%')->orderBy($_GET['field'])->paginate(100);
-            $search = $_GET['search'];
-            $field_old = $_GET['field'];
-        }
-        else if(isset($_GET['sortBy']))
-        {
-            $datas = Golongan::orderBy($_GET['sortBy'])->paginate(5);
-        }
-        else{
-            $datas = Golongan::orderBy('created_at','DESC')->paginate(5);
-        }
-        $fields = (['kode_golongan','nama_golongan']);
-        // dd($datas);
-
-        return view('crud.golongan.index', compact('datas','fields','search','field_old'));
+        $golongan=golonganModel::paginate(10);
+        return view('golongan.index',compact('golongan'));
+        //
     }
 
     /**
@@ -51,7 +26,9 @@ class GolonganController extends Controller
      */
     public function create()
     {
-        return view('crud.golongan.create');
+        $golongan=golonganModel::all();
+        return view('golongan.create',compact('golongan'));
+ //
     }
 
     /**
@@ -62,26 +39,30 @@ class GolonganController extends Controller
      */
     public function store(Request $request)
     {
-        $validati = array(
-            'kode_golongan'=>'required|unique:golongans',
-            'nama_golongan'=>'required',
-            'tunjangan_uang'=>'required|max:12'
-            );
 
-        $alert = array(
-            'kode_golongan.unique'=>'Please refresh browser and input again',
-            );
+        $definisi=['kode_golongan'=>'required|unique:golongan',
+                   'nama_golongan'=>'required',
+                   'besaran_uang'=>'required|numeric|min:0'];
 
-        $validation = Validator::make(Request::all(), $validati, $alert);
 
-        if ($validation->fails()) {
-            return redirect('golongan/create')->withErrors($validation)->withInput();
-            
+        $sms=['kode_golongan.required'=>'tidak boleh kosong',
+               'kode_golongan.unique'=>'data tidak boleh sama',
+               'nama_golongan.required'=>'tidak boleh kosong',
+               'besaran_uang.required'=>'tidak boleh kosong',
+               'besaran_uang.numeric'=>'input angka',
+               'besaran_uang.min'=>'min 0',
+
+        ];
+
+
+        $kirim=Validator::make(Input::all(),$definisi,$sms);
+        if ($kirim->fails()) {
+            return redirect('golongan/create')->withErrors($kirim)->withInput();
         }
 
-        // dd(Request::all());
 
-        Golongan::create(Request::all());
+        $golongan=Request::all();
+        golonganModel::create($golongan);
         return redirect('golongan');
     }
 
@@ -93,11 +74,7 @@ class GolonganController extends Controller
      */
     public function show($id)
     {
-        $data = Golongan::where('id',$id)->first();
-
-        // dd($data);
-
-        return view('crud.golongan.view',compact('data'));
+        //
     }
 
     /**
@@ -108,11 +85,9 @@ class GolonganController extends Controller
      */
     public function edit($id)
     {
-        $data = Golongan::where('id',$id)->first();
-        // dd($data);
-
-        return view('crud.golongan.edit', compact('data'));
         //
+        $golongan=golonganModel::find($id);
+        return view('golongan.edit',compact('golongan'));
     }
 
     /**
@@ -124,44 +99,35 @@ class GolonganController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = Request::all();
-        // dd($data);
-        $kode_lama = Golongan::where('id', $id)->first()->kode_golongan;
-
-        if ($data['kode_golongan'] != $kode_lama)
+        //
+        $cariid=golonganModel::find($id);
+        if ($cariid->kode_golongan != Request('kode_golongan')) {
+            $definisi=['kode_golongan'=>'required|unique:golongan',
+           'nama_golongan'=>'required',
+           'besaran_uang'=>'required|numeric|min:0'];
+        }
+        else
         {
-        $validati = array(
-            'kode_golongan'=>'required|unique:golongans',
-            'nama_golongan'=>'required',
-            'tunjangan_uang'=>'required|max:12'
-            );
+            $definisi=['kode_golongan'=>'required',
+           'nama_golongan'=>'required',
+           'besaran_uang'=>'required|numeric|min:0'];
         }
-        else{
-        $validati = array(
-            'nama_golongan'=>'required',
-            'tunjangan_uang'=>'required|max:12'
-            );
+        $sms=['kode_golongan.required'=>'tidak boleh kosong',
+               'kode_golongan.unique'=>'data tidak boleh sama',
+               'nama_golongan.required'=>'tidak boleh kosong',
+               'besaran_uang.required'=>'tidak boleh kosong',
+               'besaran_uang.numeric'=>'input angka',
+               'besaran_uang.min'=>'min 0',
+
+        ];
+        $validate=Validator::make(Input::all(),$definisi,$sms);
+        if ($validate->fails()) {
+            return redirect('golongan/'.$cariid->id.'/'.'edit')->withErrors($validate)->withInput();
         }
-        $alert = array(
-            'kode_golongan.unique'=>'Please refresh browser and input again',
-            );
-
-        $validation = Validator::make(Request::all(), $validati, $alert);
-
-        if ($validation->fails()) {
-            return redirect('golongan/'.$id.'/edit')->withErrors($validation)->withInput();
-            
-        }
-
-        // dd(Request::all());
-
-        Golongan::where('id', $id)->first()->update([
-            'kode_golongan'=> $data['kode_golongan'],
-            'nama_golongan'=> $data['nama_golongan'],
-            'tunjangan_uang'=> $data['tunjangan_uang']
-            ]);
-        $url = 'golongan/'.$id;
-        return redirect($url);
+        $Update=Request::all();
+        $golongan=golonganModel::find($id);
+        $golongan->update($Update);
+        return redirect('golongan');
     }
 
     /**
@@ -172,9 +138,8 @@ class GolonganController extends Controller
      */
     public function destroy($id)
     {
-        Golongan::where('id', $id)->first()->delete();
-
-        return redirect('golongan');
         //
+        golonganModel::find($id)->delete();
+        return redirect('golongan');
     }
 }

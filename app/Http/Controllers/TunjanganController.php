@@ -1,16 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Http\Controllers\Controller;
-
+use App\tunjanganModel;
 use Request;
-use Validator;
-use App\Tunjangan;
-use App\Jabatan;
-use App\Golongan;
+use App\jabatanModel;
+use App\golonganModel;
 
-class TunjanganController extends Controller
+class tunjanganController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,22 +15,9 @@ class TunjanganController extends Controller
      */
     public function index()
     {
-        if (isset($_GET['search'])) {
-            $datas = Tunjangan::where($_GET['field'],'LIKE','%'.$_GET['search'].'%')->with('jabatan','golongan')->orderBy($_GET['field'])->paginate(100);
-            $search = $_GET['search'];
-            $field_old = $_GET['field'];
-        }
-        else if(isset($_GET['sortBy']))
-        {
-            $datas = Tunjangan::with('jabatan','golongan')->orderBy($_GET['sortBy'])->paginate(5);
-        }
-        else{
-            $datas = Tunjangan::with('jabatan','golongan')->orderBy('created_at','DESC')->paginate(5);
-        }
-        $fields = (['id','kode_tunjangan','jabatan_id','golongan_id','status','jumlah_anak','besaran_uang']);
-        // dd($datas);
-
-        return view('crud.tunjangan.index', compact('datas','fields','search','field_old'));
+        $tunjangan=tunjanganModel::all();
+        return view('tunjangan.index',compact('tunjangan'));
+        //
     }
 
     /**
@@ -44,9 +27,10 @@ class TunjanganController extends Controller
      */
     public function create()
     {
-        $jabatans = Jabatan::all();
-        $golongans = Golongan::all();
-        return view('crud.tunjangan.create',compact('jabatans','golongans'));
+        $jabatan=jabatanModel::all();
+        $golongan=golonganModel::all();
+        $tunjangan=tunjanganModel::all();
+        return view('tunjangan.create',compact('tunjangan','golongan','jabatan'));
         //
     }
 
@@ -58,24 +42,10 @@ class TunjanganController extends Controller
      */
     public function store(Request $request)
     {
-        $validati = array(
-            'kode_tunjangan'=>'required|unique:tunjangans',
-            'jabatan_id'=>'required',
-            'golongan_id'=>'required',
-            'status'=>'required',
-            'jumlah_anak'=>'required|max:2',
-            'besaran_uang'=>'required|max:12',
-            );
-
-        $validation = Validator::make(Request::all(), $validati);
-
-
-        if ($validation->fails()) {
-            return redirect('tunjangan/create')->withErrors($validation)->withInput();
-        }
-        $data = Request::all();
-        Tunjangan::create($data);
+        $tunjangan=Request::all();
+        tunjanganModel::create($tunjangan);
         return redirect('tunjangan');
+        //
     }
 
     /**
@@ -86,9 +56,7 @@ class TunjanganController extends Controller
      */
     public function show($id)
     {
-        $data = Tunjangan::where('id',$id)->with('jabatan','golongan')->first();
-        // dd($data);
-        return view('crud.tunjangan.view', compact('data'));
+        //
     }
 
     /**
@@ -97,13 +65,13 @@ class TunjanganController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+      public function edit($id)
     {
-        $data = Tunjangan::where('id',$id)->with('jabatan','golongan')->first();
-        $jabatans = Jabatan::all();
-        $golongans = Golongan::all();
-        // dd($data);
-        return view('crud.tunjangan.edit',compact('data','jabatans','golongans'));
+        //
+        $tunjangan=tunjanganModel::find($id);
+        $jabatan=jabatanModel::all();
+        $golongan=golonganModel::all();
+        return view('tunjangan.edit',compact('tunjangan','jabatan', 'golongan'));
     }
 
     /**
@@ -115,38 +83,13 @@ class TunjanganController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = Request::all();
-        $validati = array(
-            'kode_tunjangan'=>'required|unique:tunjangans',
-            'jabatan_id'=>'required',
-            'golongan_id'=>'required',
-            'status'=>'required',
-            'jumlah_anak'=>'required|max:2',
-            'besaran_uang'=>'required|max:12',
-            );
-        $old_kode = Tunjangan::where('id', $id)->first()->kode_tunjangan;
-
-        if ($old_kode == $data['kode_tunjangan']){
-            $validati['kode_tunjangan'] = 'required';
-        }
-
-        $validation = Validator::make(Request::all(), $validati);
-
-
-        if ($validation->fails()) {
-            return redirect('tunjangan/'.$id.'/edit')->withErrors($validation)->withInput();
-        }
-        // dd($data);
-        Tunjangan::where('id',$id)->update([
-            'kode_tunjangan'=>$data['kode_tunjangan'],
-            'jabatan_id'=>$data['jabatan_id'],
-            'golongan_id'=>$data['golongan_id'],
-            'status'=>$data['status'],
-            'jumlah_anak'=>$data['jumlah_anak'],
-            'besaran_uang'=>$data['besaran_uang'],
-            ]);
-        $url = 'tunjangan/'.$id;
-        return redirect($url);
+        //
+        $Update=Request::all();
+        $jabatan=jabatanModel::all();
+        $golongan=golonganModel::find($id);
+        $tunjangan=tunjanganModel::find($id);
+        $tunjangan->update($Update);
+        return redirect('tunjangan');
     }
 
     /**
@@ -157,8 +100,8 @@ class TunjanganController extends Controller
      */
     public function destroy($id)
     {
-        Tunjangan::where('id', $id)->delete();
-
+        //
+        tunjanganModel::find($id)->delete();
         return redirect('tunjangan');
     }
 }
