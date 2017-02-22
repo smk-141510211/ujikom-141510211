@@ -22,7 +22,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-inverse navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
 
@@ -43,7 +43,22 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        <li><a href="{{ url('/Jabatan')}}">Jabatan</a></li>
+                        <li><a href="{{ url('/Golongan')}}">Golongan</a></li>
+                        <li><a href="{{ url('/Kategorilembur')}}">Kategori Lembur</a></li>
+                        <li><a href="{{ url('/Pegawai')}}">Pegawai</a></li>
+                        <li><a href="{{ url('/ShowPegawai')}}">Pegawai (Khusus Pegawai)</a></li>
+                        <li><a href="{{ url('/Lemburpegawai')}}">Lembur Pegawai</a>
+                        <li><a href="{{ url('/Tunjangan')}}">Tunjangan</a></li>
+                        <li><a href="{{ url('/Tunjanganpegawai')}}">Tunjangan Pegawai</a></li>
+                        <li><a href="{{ url('/Penggajian')}}">Penggajian</a></li>
+
+
+
+                        </li>
+
+
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -51,7 +66,7 @@
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
+                            
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

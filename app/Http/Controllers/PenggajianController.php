@@ -2,18 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
+use App\Http\Controllers\Controller;
+use Form;
+use Html;
+use Input;
+use Redirect;
+use View;
+use App\TunjanganPegawaiModel;
+use App\TunjanganModel;
+use App\PenggajianModel;
+use App\PegawaiModel;
 
-class penggajianController extends Controller
+
+
+class PenggajianController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('Bendahara');
+    }
+
     public function index()
     {
-        //
+        $pegawai = PegawaiModel::all();
+        $tunpeg = TunjanganPegawaiModel::all();
+        $penggajian = PenggajianModel::all();
+        return view('Penggajian.index', compact('penggajian', 'tunpeg', 'pegawai'));
     }
 
     /**
@@ -22,8 +42,13 @@ class penggajianController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {   
+
+        $tunjangan = TunjanganModel::all();
+        $pegawai = PegawaiModel::all();
+        $tunpeg = TunjanganPegawaiModel::all();
+        return view('Penggajian.create', compact('tunpeg', 'pegawai',
+           'tunjangan' ));
     }
 
     /**
@@ -34,7 +59,9 @@ class penggajianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $penggajian = Request::all();
+        PenggajianModel::create($penggajian);
+        return redirect('Penggajian');
     }
 
     /**
@@ -45,7 +72,9 @@ class penggajianController extends Controller
      */
     public function show($id)
     {
-        //
+        $tunpeg = TunjanganPegawaiModel::all();
+        $penggajian = PenggajianModel::find($id);
+        return view('Penggajian.show', compact('tunpeg', 'penggajian'));
     }
 
     /**
@@ -56,7 +85,9 @@ class penggajianController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tunpeg = TunjanganPegawaiModel::all();
+        $penggajian = PenggajianModel::find($id);
+        return view('Penggajian.edit', compact('penggajian', 'tunpeg'));
     }
 
     /**
@@ -68,7 +99,10 @@ class penggajianController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $penggajianUpdate = Request::all();
+        $penggajian = PenggajianModel::find($id);
+        $penggajian->update($penggajianUpdate);
+        return redirect('Penggajian');
     }
 
     /**
@@ -79,6 +113,7 @@ class penggajianController extends Controller
      */
     public function destroy($id)
     {
-        //
+        PenggajianModel::find($id)->delete();
+        return redirect('Penggajian');
     }
 }

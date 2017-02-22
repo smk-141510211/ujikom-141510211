@@ -11,19 +11,26 @@
 |
 */
 
-
-
+Route::get('/', 'HomeController@index');
 Auth::routes();
 
-Route::get('/','HomeController@index');
-Route::get('home','HomeController@index');
+Route::resource('/Jabatan', 'JabatanController');
+Route::resource('/Golongan', 'GolonganController');
+Route::resource('/Kategorilembur', 'KategoriLemburController');
+Route::resource('/Pegawai', 'PegawaiController');
+Route::resource('/ShowPegawai', 'ShowPegawaiController');
+Route::resource('/Lemburpegawai', 'LemburPegawaiController');
+Route::resource('/Tunjangan', 'TunjanganController');
+Route::resource('/Tunjanganpegawai', 'TunjanganPegawaiController');
+Route::resource('/Penggajian', 'PenggajianController');
 
-Route::get('/index1','bbController@index1');
-Route::resource('/pegawai','pegawaiController');
-Route::resource('/jabatan','jabatanController');
-Route::resource('/golongan','golonganController');
-Route::resource('/tunjangan','tunjanganController');
-Route::resource('/kategori_lembur','kategori_lemburController');
-Route::resource('/lembur_pegawai','lembur_pegawaiController');
-Route::resource('/tunjangan_pegawai','tunjangan_pegawaiController');
-Route::resource('/penggajian','penggajianController');
+Route::group(['middleware' => ['api'],'prefix' => 'api'], function () {
+    Route::post('register', 'APIController@register');
+    Route::post('login', 'APIController@login');
+    Route::group(['middleware' => 'jwt-auth'], function () {
+    	Route::post('get_user_details', 'APIController@get_user_details');
+    });
+});
+
+
+

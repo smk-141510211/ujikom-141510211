@@ -1,176 +1,163 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
 @section('content')
-            <div class="col-md-3 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                <center>
-                <h3>MY APPLICATION</h3>
-                    <h5>HALAMAN WEB</h5>
-                    <div class="collapse navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">Daftar Pegawai</div>
+                <div class="panel-body">
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-center">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a class="" href="{{ url('/login') }}">Login</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+                        {!! Form::open(['url' => '\Pegawai', 'enctype' => 'multipart/form-data', 'files' => true]) !!}
 
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ url('/logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-                </div>
-
-                <div class="panel-body" align="center">
-                    <a class="btn btn-primary form-control" href="{{url('jabatan')}}">Jabatan</a><hr>
-                    <a class="btn btn-primary form-control" href="{{url('golongan')}}">Golongan</a><hr>
-                    <a class="btn btn-primary form-control" href="{{url('pegawai')}}">Pegawai</a><hr>
-                    <a class="btn btn-primary form-control" href="{{url('kategori_lembur')}}">Kategori Lembur</a><hr>
-                    <a class="btn btn-primary form-control" href="{{url('lemburpegawai')}}">Lembur Pegawai</a><hr>
-                    <a class="btn btn-primary form-control" href="{{url('tunjangan')}}">Tunjangan</a><hr>
-                    <a class="btn btn-primary form-control" href="{{url('tunjangan_pegawai')}}">Tunjangan Karyawan</a><hr>
-                    <a class="btn btn-primary form-control" href="{{url('penggajian')}}">Penggajian Karyawan</a><hr>  
-
-                </div>
-            </div>
-        </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 ">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3>Register</h3> </div>
-                    <div class="panel-body">
-                     <form class="form-horizontal" role="form" method="POST" action="{{ route('pegawai.store') }}" enctype="multipart/form-data">
-                        {{ csrf_field() }}
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <label for="name" class="col-md-4 control-label">Name</label>
 
                             <div class="col-md-6">
-                                <label for="name" >Nama Pegawai</label>
-                                <input id="name" type="text" class="form-control" name="name" autofocus>
+                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
 
+                                @if ($errors->has('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span>
+                                @endif
                             </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <label for="email" >E-MAIL</label>
-                                <input id="email" type="email" class="form-control" name="email" autofocus>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
 
+                                @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
-                            </div>
-
-                             <div class="col-md-12">
-                                <label >Type User</label>
-                                   <select name="permision" class="col-md-12 form-control">
-                                       <option>Admin</option>
-                                       <option>HRD</option>
-                                       <option>Bagian Administrasi</option>
-                                       <option>Pegawai</option>
-                                   </select>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label >Password</label>
-                                    <input id="password" type="password" class="form-control" name="password" autofocus>
-
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </span>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label >Confirm Password</label>
-
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autofocus>
+                                @endif
                             </div>
                         </div>
-                    </div>
-                <div>
-            </div>
-        </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><h3>Tambah Data Pegawai</h3> </div>
-                        <div class="panel-body">
-
-                            <div class="col-md-12">
-                                <label for="nip" >NIP Pegawai</label>
-                                <input id="nip" type="text" class="form-control" name="nip" autofocus>
-
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('nip') }}</strong>
-                                    </span>
-                            </div>
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <label for="Jabatan">Jabatan</label>
-                                    <select class="col-md-6 form-control" name="jabatan_id">
-                                        @foreach($jabatan as $datajabatan)
-                                            <option  value="{{$datajabatan->id}}" >{{$datajabatan->nama_jabatan}}</option>
-                                        @endforeach
-                                    </select>
-                                    <span>{{$errors->first('jabatan_id')}}</span>
-                            </div>
+                                <input id="password" type="password" class="form-control" name="password" required>
 
-                            <div class="col-md-6">
-                                <label for="Jabatan">Golongan</label>
-                                    <select class="col-md-6 form-control" name="golongan_id">
-                                        @foreach($golongan as $datagolongan)
-                                            <option  value="{{$datagolongan->id}}" >{{$datagolongan->nama_golongan}}</option>
-                                        @endforeach
-                                    </select>
+                                @if ($errors->has('password'))
                                     <span class="help-block">
-                                        {{$errors->first('golongan_id')}}
+                                        <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                            </div>
-
-                            <div class="col-md-12">
-                                <label >Foto Pegawai</label>
-                                    <input type="file" class="form-control" name="foto" autofocus>
-
-                                    @if ($errors->has('foto'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('foto') }}</strong>
-                                        </span>
-                                    @endif
-                            </div>
-
-                            <div class="col-md-12" >
-                                <button type="submit" class="btn btn-primary form-control">Tambah</button>
+                                @endif
                             </div>
                         </div>
-                    </div>
+
+                        <div class="form-group">
+                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('permission') ? ' has-error' : '' }}">
+                            <label for="permission" class="col-md-4 control-label">Permission</label>
+
+                            <div class="col-md-6">
+                                <select id="permission" type="text" class="form-control" name="permission" required>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Pegawai">Pegawai</option>
+                                    <option value="HRD">HRD</option>
+                                    <option value="Bendahara">Bendahara</option>
+                                </select> 
+
+                                @if ($errors->has('permission'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('permission') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+
+                            <div class="container">
+                            <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                            <div class="panel panel-info">
+                             <div class="panel-heading">Pegawai</div>
+                                <div class="panel-body">
+
+                           <div class="form-group">
+                            <label for="Nip" class="col-md-4 control-label">NIP</label>
+
+                            <div class="col-md-6">
+                                <input id="Nip" type="text" class="form-control" name="Nip" required>
+                            </div>
+                        </div>
+
+                         <div class="form-group{{ $errors->has('Jabatan_id') ? ' has-error' : '' }}">
+                            <label for="Jabatan_id" class="col-md-4 control-label">Jabatan</label>
+
+                            <div class="col-md-6">
+                    
+                                @if ($errors->has('Jabatan_id'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('Jabatan_id') }}</strong>
+                                    </span>
+                                @endif 
+                                <select class="form-control" name="Jabatan_id">
+                                    @foreach($jab as $data)
+                                    <option value="{{ $data->id}}">{{$data->Nama_jabatan}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                         <div class="form-group{{ $errors->has('Golongan_id') ? ' has-error' : '' }}">
+                            <label for="Golongan_id" class="col-md-4 control-label">Golongan</label>
+
+                            <div class="col-md-6">
+                    
+                                @if ($errors->has('Golongan_id'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('Golongan_id') }}</strong>
+                                    </span>
+                                @endif 
+                                <select class="form-control" name="Golongan_id">
+                                    @foreach($gol as $data)
+                                    <option value="{{ $data->id}}">{{$data->Nama_golongan}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                         <div class="form-group">
+                            <label for="Photo" class="col-md-4 control-label">Photo</label>
+
+                            <div class="col-md-6">
+                                <input id="Photo" type="file" class="form-control" name="Photo" required>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                        <div class="col-md-6 col-md-offset-4">
+                         {!! Form::submit('Simpan', ['class' => 'btn btn-success']) !!}  
+                         {!! Form::close() !!}
+                            </div>
+                            </div>
+                    </form>
                 </div>
             </div>
+            </div>
+            </div>
+            </div>
         </div>
-        </form>
-
+    </div>
+</div>
+</div>
 @endsection

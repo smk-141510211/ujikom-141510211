@@ -1,119 +1,40 @@
-@extends('layouts/app')
+@extends('layouts.app2')
 @section('content')
-<style type="text/css">
-	th,td{
-		text-align: center;
-	}
-</style>
-<div class="col-md-3 ">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <center>
-                <h3>MY APPLICATION</h3>
-                <h5>HALAMAN WEB</h5>
-                <div class="collapse navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-center">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a class="" href="{{ url('/login') }}">Login</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ url('/logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-
-
-                <div class="panel-body" align="center">
-                    
-                    <a class="btn btn-primary form-control" href="{{url('jabatan')}}">Jabatan</a><hr>
-                    <a class="btn btn-primary form-control" href="{{url('golongan')}}">Golongan</a><hr>
-                    <a class="btn btn-primary form-control" href="{{url('pegawai')}}">Pegawai</a><hr>
-                    <a class="btn btn-primary form-control" href="{{url('kategori_lembur')}}">Kategori Lembur</a><hr>
-                    <a class="btn btn-primary form-control" href="{{url('lemburpegawai')}}">Lembur Pegawai</a><hr>
-                    <a class="btn btn-primary form-control" href="{{url('tunjangan')}}">Tunjangan</a><hr>
-                    <a class="btn btn-primary form-control" href="{{url('tunjanganpegawai')}}">Tunjangan Karyawan</a><hr>
-                    <a class="btn btn-primary form-control" href="{{url('penggajian')}}">Penggajian Karyawan</a><hr>  
-  
-
-                </div>
-            </center>
-        </div>
-    </div>
-</div>
-
-
-<div class="col-md-9 ">
-<center><h1>Data Jabatan</h1>
-	<table class="table table-striped table-bordered table-hover">
-    <!-- <table class="table table-default"> -->
-		<table class="table table-hover table-striped ">
-			<tr class="danger">
-				<a href="{{url('/jabatan/create')}}"class="btn btn-primary form-control">Tambah Data</a><br><br>
-				{{$jabatan->links()}}
-
-	<thead>
-		<tr class="bg-info">
-		<th>No</th>
-		<th><center>kode jabatan</center></th>
-		<th><center>nama jabatan</center></th>
-		<th><center>besaran uang</center></th>
-		
-		<th colspan="3">Action</th>
-			
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container-fluid">
+	<h1>Data Jabatan</h1>
+	<br>
+	<a href="{{ url('/Jabatan/create')}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>&nbsp;Tambah Data</a>
+<br>
+<br>
+<div class="table-responsive">
+	<table class="table table-bordered">
+		<tr class="info">
+			<th><center>No</center></th>
+			<th><center>Kode Jabatan</center></th>
+			<th><center>Nama Jabatan</center></th>
+			<th><center>Besaran Uang</center></th>
+			<th colspan="3"><center>Action</center></th>
 		</tr>
-	</thead>
-	<tbody>
-		@php
-		$no=1;
-		@endphp
-		@foreach($jabatan as $jabatans)
+
+		<?php $no=1;?>
+		@foreach ($jab as $data)
 		<tr>
-			<td>{{$no++}}</td>
-			<td>{{$jabatans->kode_jabatan}}</td>
-			<td>{{$jabatans->nama_jabatan}}</td>
-			<?php $jabatans->besaran_uang=number_format($jabatans->besaran_uang,2,',','.') ?>
-			<td>{{$jabatans->besaran_uang}}</td>
-			
-		<td><a href="{{route('jabatan.edit',$jabatans->id)}}" class="btn btn-warning">Update</a></td>	
-		</td>
-		<td>
-
-		{!!Form::open(['method'=>'DELETE','route'=>['jabatan.destroy',$jabatans->id]])!!}
-		<input type="submit" class="btn btn-danger" onclick="return confirm('anda yakin akan menghapus data?');"value="Delete"> 
-		{!!Form::close()!!}
-		</td>
+			<td><center>{{ $no++ }}</center></td>
+			<td><center>{{ $data->Kode_jabatan}}</center></td>
+			<td><center>{{ $data->Nama_jabatan}}</center></td>
+			<td><center>Rp. {{number_format($data->Besaran_uang)}}</center></td>
+			<td><center><a href="{{ url('Jabatan', $data->id)}}" class="btn btn-primary"><i class="fa fa-eye"></i></a></center></td>
+			<td><center><a href="{{ route('Jabatan.edit', $data->id)}}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i></a></center></td>
+			<td><center>
+				{!! Form::open(['method'=> 'DELETE', 'route' => ['Jabatan.destroy', $data->id]]) !!}
+				<button type="submit" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+			</center></td>
 		</tr>
-		
 		@endforeach
-
-	</tbody>
-</table>
-
-
-
-
-@endsection
+	</table>
+</div>
+</div>
+@stop

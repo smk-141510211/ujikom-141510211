@@ -4,26 +4,20 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class golonganModel extends Model
+class GolonganModel extends Model
 {
-	protected $table='golongan';
-	protected $fillable=array('kode_golongan','nama_golongan','besaran_uang');
-	protected $visible=array('kode_golongan','nama_golongan','besaran_uang');
+    protected $table = 'golongans';
+    protected $fillable = ['Kode_golongan', 'Nama_golongan', 'Besaran_uang'];
+    protected $visible = ['Kode_golongan', 'Nama_golongan', 'Besaran_uang'];
+    public $timestamps = true;
 
-	public function tunjanganModel()
-	{
-		return $this->hasMany('App\tunjanganModel','golongan_id');
-	}
-	public function kategori_lemburModel()
-	{
-		return $this->hasMany('App\kategori_lemburModel','golongan_id');
-	}
-
-    public function pegawaiModel()
-	{
-		return $this->hasMany('App\pegawaiModel','golongan_id');
-	}
-
-	
-    //
+    public function kategori_lemburs(){
+    	return $this->hasMany('App\KategoriLemburModel', 'Golongan_id');
+    }
+    public function pegawais(){
+        return $this->hasMany('App\PegawaiModel', 'Golongan_id');
+    }
+    public function tunjangans(){
+        return $this->hasMany('App\TunjanganModel', 'Golongan_id');
+    }
 }

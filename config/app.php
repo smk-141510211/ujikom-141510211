@@ -163,6 +163,11 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Laravel\Tinker\TinkerServiceProvider::class,
+
+      
+
 
         /*
          * Package Service Providers...
@@ -178,7 +183,6 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
 
     ],
 
@@ -204,7 +208,6 @@ return [
         'Cookie' => Illuminate\Support\Facades\Cookie::class,
         'Crypt' => Illuminate\Support\Facades\Crypt::class,
         'DB' => Illuminate\Support\Facades\DB::class,
-        'Input' => Illuminate\Support\Facades\Input::class,
         'Eloquent' => Illuminate\Database\Eloquent\Model::class,
         'Event' => Illuminate\Support\Facades\Event::class,
         'File' => Illuminate\Support\Facades\File::class,
@@ -227,9 +230,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Form'=> Collective\Html\FormFacade::class,
-        'Html'=> Collective\Html\HtmlFacade::class,
-        'JWTAuth'=>'Tymon\JWTAuth\Facades\JWTAuth',
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
+
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlServiceProvider::class,
 
     ],
 

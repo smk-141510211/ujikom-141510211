@@ -4,19 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class penggajianModel extends Model
+class PenggajianModel extends Model
 {
-	protected $table='penggajian';
-	protected $fillable=array('tunjangan_pegawai_id','jumlah_jam_lembur','jumlah_uang_lembur','gaji_pokok','total_gaji','tanggal_pengambilan','status_pengambilan','petugas_penerima');
+     protected $table = 'penggajians';
+    protected $fillable = ['Tunjangan_pegawai_id', 'Jumlah_jam_lembur', 'Jumlah_uang_lembur', 'Gaji_pokok', 'Total_gaji', 'Tanggal_pengambilan', 'Status_pengambilan', 'Petugas_penerima'];
+    protected $visible = ['Tunjangan_pegawai_id', 'Jumlah_jam_lembur', 'Jumlah_uang_lembur', 'Gaji_pokok', 'Total_gaji', 'Tanggal_pengambilan', 'Status_pengambilan', 'Petugas_penerima'];
+    public $timestamps = true;
 
-	protected $visible=array('tunjangan_pegawai_id','jumlah_jam_lembur','jumlah_uang_lembur','gaji_pokok','total_gaji','tanggal_pengambilan','status_pengambilan','petugas_penerima');
-    //
-
-
-
-    public function tunjangan_pegawaiModel()
-	{
-		return $this->belongsTo('App\tunjangan_pegawaiModel','tunjangan_pegawai_id');
-	}
-
+    public function tunjangan_pegawais(){
+    	return $this->belongsTo('App\TunjanganPegawaiModel', 'Tunjangan_pegawai_id');
+    }
 }

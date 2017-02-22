@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use App\PegawaiModel;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email','permision', 'password',
+        'name', 'email', 'password','permission',
     ];
 
     /**
@@ -27,9 +27,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function pegawaiModel()
+    public function pegawais()
     {
-        return $this->hasOne('App\pegawaiModel','user_id');
+        return $this->hasOne('App\PegawaiModel', 'User_id');
     }
 
 }

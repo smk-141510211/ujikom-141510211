@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\pegawaiModel;
+use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\User;
-use App\golonganModel;
-use App\jabatanModel;
+use App\PegawaiModel;
+use App\JabatanModel;
+use App\GolonganModel;
 use Input;
-use Validator;
+use File;
+
+
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Request;
 
 
-
-class pegawaiController extends Controller
+class PegawaiController extends Controller
 {
     use RegistersUsers;
     /**
@@ -22,22 +25,16 @@ class pegawaiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('HRD');
+    }
     
-
     public function index()
     {
-         $pegawai=pegawaiModel::paginate(5);
-         $searchuser=User::where('name',request('name'))->paginate(5);
-        if(request()->has ('name'))
-        {
-         $searchuser=User::where('name',request('name'))->paginate(5);
- 
-        }
-        else
-        {
-            $searchuser=User::paginate(5);
-        }
-        return view('pegawai.index',compact('pegawai','searchuser'));
+       
+        $pegawai = PegawaiModel::all();
+        return view('Pegawai.index', compact('pegawai'));
     }
 
     /**
@@ -46,11 +43,11 @@ class pegawaiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {       $user=User::all();
-            $jabatan=jabatanModel::all();
-            $golongan=golonganModel::all();
-        return view('pegawai.create',compact('pegawai','golongan','jabatan'));
-        //
+    {
+        $user = User::all();
+        $gol = GolonganModel::all();
+        $jab = JabatanModel::all();
+        return view('Pegawai.create', compact('user','gol','jab'));
     }
 
     /**
@@ -61,66 +58,44 @@ class pegawaiController extends Controller
      */
     public function store(Request $request)
     {
-        // $rules = array('email' => 'required|unique:users',
-        //                 'password' => 'required|min:6|confirmed',
-        //                 'name' => 'required',
-        //                 'permision' =>'required',
-        //                 'nip' => 'required|min:11|numeric|unique:pegawai',
-        //                 'jabatan_id' =>'required',
-        //                 'golongan_id' => 'required',
-        //                 'foto' => 'required',
-        //                  );
+        $this->Validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+            'permission' => 'required|max:255',
+            'Nip'=>'required|numeric|min:3|unique:pegawais,Nip',
 
-        // $message =array('email.unique' =>'Gunakan Email Lain' ,
-        //                 'name.required' =>'Wajib Isi',
-        //                 'email.required' =>'Wajib Isi',
-        //                 'password.unique' =>'wajib isi',
-        //                 'permision.confirmed' =>'Masukan Password Yang Benar',
-        //                 'permision.required' =>'Wajib isi',
-        //                 'nip.unique' =>'Gunakan Nip Lain',
-        //                 'nip.required' =>'Wajib isi',
-        //                 'nip.min' =>'Min 11',
-        //                 'nip.numeric' =>'Input Dengan Angka',
-        //                 'jabatan_id.required' =>'Wajib isi',
-        //                 'golongan_id.required' =>'Wajib isi');
+            ]);
+
+        $user = User::create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'password' => bcrypt($request->get('password')),
+            'permission' => $request->get('permission'),
+            
+            ]);
 
 
-        // $val=validator::make(Input::all(),$rules,$message);
-        // if($val->fails())
-        // {
-        //     return redirect('pegawai/create')
-        //     ->withErrors($val)
-        //     ->withInput();
+            $pegawai = new PegawaiModel;
+            $pegawai->Nip = $request->get('Nip');
+            $pegawai->User_id = $user->id;
+            $pegawai->Jabatan_id = $request->get('Jabatan_id');
+            $pegawai->Golongan_id = $request->get('Golongan_id');
 
-        // }
-
-
-
-           $akun=new User ;
-         $akun->name=$request->get('name');
-         $akun->email=$request->get('email');
-         $akun->password=bcrypt($request->get('password'));
-         $akun->permision=$request->get('permision');
-         $akun->save();
-
-        $file = Input::file('foto');
-        $destinationPath = public_path().'/assets/image/';
-        $filename = $file->getClientOriginalName();
-        $uploadSuccess = $file->move($destinationPath, $filename);
-
-        if(Input::hasFile('foto')){
-         $pegawai=new pegawaiModel ;
-         $pegawai->nip=$request->get('nip');
-         $pegawai->foto = $filename;
-         //$pegawai->foto=Input::get('foto');
-         $pegawai->jabatan_id=$request->get('jabatan_id');
-         $pegawai->golongan_id=$request->get('golongan_id');
-         $pegawai->user_id=$akun->id;
-         $pegawai->save();
-         
+        if ($request->hasFile('Photo')){
+            
+            $uploadSucces = $request->file('Photo');
+            $extension = $uploadSucces->getClientOriginalExtension();
+            $filename = md5(time()).'.'.$extension;
+            $destinationPath = public_path().DIRECTORY_SEPARATOR.'/assets/image/';
+            $uploadSucces->move($destinationPath, $filename);
+            
+            $pegawai->Photo = $filename;
+            $pegawai->save(); 
         }
-        return redirect('pegawai');
+        
 
+        return redirect('Pegawai');
     }
 
     /**
@@ -131,7 +106,11 @@ class pegawaiController extends Controller
      */
     public function show($id)
     {
-        //
+         $pegawai = PegawaiModel::find($id);
+         $gol = GolonganModel::all();
+         $jab = JabatanModel::all();
+         $user = User::all();
+        return view('Pegawai.show', compact('pegawai', 'gol', 'jab', 'user'));
     }
 
     /**
@@ -142,14 +121,11 @@ class pegawaiController extends Controller
      */
     public function edit($id)
     {
-        //
-        // dd($id);
-        $jabatan=jabatanModel::all();
-        $golongan=golonganModel::all();
-         $pegawai=pegawaiModel::find($id);
-          $user=User::where('id',$pegawai->user_id)->first();
-         //dd($pegawai);
-        return view('pegawai.edit',compact('pegawai','jabatan','golongan','user'));
+
+        $gol = GolonganModel::all();
+        $jab = JabatanModel::all();
+        $pegawai = PegawaiModel::find($id);
+        return view('Pegawai.edit', compact('pegawai', 'jab', 'gol'));
     }
 
     /**
@@ -161,61 +137,35 @@ class pegawaiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        // $cariid=pegawaiModel::find($id);
-        // if ($cariid->nip != Request('nip')) {
-        //     $rules = array('email' => 'required|unique:users',
-        //                 'password' => 'required|min:6|confirmed',
-        //                 'name' => 'required',
-        //                 'permision' =>'required',
-        //                 'nip' => 'required|min:11|numeric|unique:pegawai',
-        //                 'jabatan_id' =>'required',
-        //                 'golongan_id' => 'required',
-        //                 'foto' => 'required',
-        //                  );
-        // }
-        // else{
+         $this->Validate($request, [
+            'name' => 'max:255',
+            'email' => 'email|max:255|unique:users',
+            'password' => 'min:6|confirmed',
+            'permission' => 'max:255',
+            'Nip'=>'numeric|min:3',
+            ]);
 
-        //     $rules = array('email' => 'required',
-        //                     'password' => 'required|min:6|confirmed',
-        //                     'name' => 'required',
-        //                     'permision' =>'required',
-        //                     'nip' => 'required|min:11|numeric',
-        //                     'jabatan_id' =>'required',
-        //                     'golongan_id' => 'required',
-        //                     'foto' => 'required',
-        //                      );
-        // }
+        $pegawai = PegawaiModel::where('id', $id)->first();
+        $pegawai->Nip = $request['Nip'];
+        $pegawai->Jabatan_id = $request['Jabatan_id'];
+        $pegawai->Golongan_id = $request['Golongan_id'];
 
-        // $message =array('email.unique' =>'Gunakan Email Lain' ,
-        //                 'name.required' =>'Wajib Isi',
-        //                 'email.required' =>'Wajib Isi',
-        //                 'password.unique' =>'wajib isi',
-        //                 'permision.confirmed' =>'Masukan Password Yang Benar',
-        //                 'permision.required' =>'Wajib isi',
-        //                 'nip.unique' =>'Gunakan Nip Lain',
-        //                 'nip.required' =>'Wajib isi',
-        //                 'nip.min' =>'Min 11',
-        //                 'nip.numeric' =>'Input Dengan Angka',
-        //                 'jabatan_id.required' =>'Wajib isi',
-        //                 'golongan_id.required' =>'Wajib isi');
 
-        // $val=validator::make(Input::all(),$rules,$message);
-        // if($val->fails())
-        // {
-        //     return redirect('pegawai/'.$cariid->id.'/edit')
-        //     ->withErrors($val)
-        //     ->withInput();
-
-        // }
-        $updatepegawai=Request::all();
-        $pegawai=User::find($id);
-        // // $user=User::where('id',$pegawai->user_id) ;
-        // // dd($user);
-        // // $user=User::find($pegawai->user_id);
-        // $user->update($update);
-        $pegawai->update($updatepegawai);
-        return redirect('pegawai');
+        if($request->file('Photo') == "")
+        {
+            $pegawai->Photo = $pegawai->Photo;
+        } 
+        else
+        {
+            $file = $request->file('Photo');
+            $fileName = $file->getClientOriginalName();
+            $request->file('Photo')->move("assets/image/", $fileName);
+            $pegawai->Photo = $fileName;
+        }
+        
+        $pegawai->update();
+        return redirect()->to('Pegawai');
+           
     }
 
     /**
@@ -226,8 +176,7 @@ class pegawaiController extends Controller
      */
     public function destroy($id)
     {
-        //
-         pegawaiModel::find($id)->delete();
-        return redirect('pegawai');
+        PegawaiModel::find($id)->delete();
+        return redirect('Pegawai');
     }
 }

@@ -1,23 +1,37 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\tunjanganModel;
-use Request;
-use App\jabatanModel;
-use App\golonganModel;
 
-class tunjanganController extends Controller
+use Request;
+use App\Http\Controllers\Controller;
+use Form;
+use Html;
+use Input;
+use Redirect;
+use View;
+use App\TunjanganModel;
+use App\JabatanModel;
+use App\GolonganModel;
+
+class TunjanganController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('Bendahara');
+    }
+
     public function index()
     {
-        $tunjangan=tunjanganModel::all();
-        return view('tunjangan.index',compact('tunjangan'));
-        //
+        $gol = GolonganModel::all();
+        $jab = JabatanModel::all();
+        $tunjangan = TunjanganModel::all();
+        return view('Tunjangan.index', compact('tunjangan', 'gol', 'jab'));
     }
 
     /**
@@ -27,11 +41,9 @@ class tunjanganController extends Controller
      */
     public function create()
     {
-        $jabatan=jabatanModel::all();
-        $golongan=golonganModel::all();
-        $tunjangan=tunjanganModel::all();
-        return view('tunjangan.create',compact('tunjangan','golongan','jabatan'));
-        //
+       $gol = GolonganModel::all();
+        $jab = JabatanModel::all();
+        return view('Tunjangan.create', compact('gol','jab'));
     }
 
     /**
@@ -42,10 +54,9 @@ class tunjanganController extends Controller
      */
     public function store(Request $request)
     {
-        $tunjangan=Request::all();
-        tunjanganModel::create($tunjangan);
-        return redirect('tunjangan');
-        //
+        $tunjangan = Request::all();
+        TunjanganModel::create($tunjangan);
+        return redirect('Tunjangan');
     }
 
     /**
@@ -56,7 +67,10 @@ class tunjanganController extends Controller
      */
     public function show($id)
     {
-        //
+        $gol = GolonganModel::all();
+        $jab = JabatanModel::all();
+        $tunjangan = TunjanganModel::find($id);
+        return view('Tunjangan.show', compact('tunjangan', 'gol', 'jab'));
     }
 
     /**
@@ -65,13 +79,12 @@ class tunjanganController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-      public function edit($id)
+    public function edit($id)
     {
-        //
-        $tunjangan=tunjanganModel::find($id);
-        $jabatan=jabatanModel::all();
-        $golongan=golonganModel::all();
-        return view('tunjangan.edit',compact('tunjangan','jabatan', 'golongan'));
+        $jab = JabatanModel::all();
+        $gol = GolonganModel::all();
+        $tunjangan = TunjanganModel::find($id);
+        return view('Tunjangan.edit', compact('tunjangan', 'gol', 'jab'));
     }
 
     /**
@@ -83,13 +96,10 @@ class tunjanganController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $Update=Request::all();
-        $jabatan=jabatanModel::all();
-        $golongan=golonganModel::find($id);
-        $tunjangan=tunjanganModel::find($id);
-        $tunjangan->update($Update);
-        return redirect('tunjangan');
+        $tunjanganUpdate = Request::all();
+        $tunjangan = TunjanganModel::find($id);
+        $tunjangan->update($tunjanganUpdate);
+        return redirect('Tunjangan');
     }
 
     /**
@@ -100,8 +110,7 @@ class tunjanganController extends Controller
      */
     public function destroy($id)
     {
-        //
-        tunjanganModel::find($id)->delete();
-        return redirect('tunjangan');
+        TunjanganModel::find($id)->delete();
+        return redirect('Tunjangan');
     }
 }

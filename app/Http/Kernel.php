@@ -52,5 +52,10 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+         'jwt-auth' => \App\Http\Middleware\authJWT::class,
+         'Admin' => \App\Http\Middleware\Admin::class,
+         'HRD' => \App\Http\Middleware\HRD::class,
+         'Pegawai' => \App\Http\Middleware\Pegawai::class,
+         'Bendahara' => \App\Http\Middleware\Bendahara::class,
     ];
 }

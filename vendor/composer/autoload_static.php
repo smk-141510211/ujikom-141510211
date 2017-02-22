@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit80c68858c71d5d941a458f1966b0deaf
+class ComposerStaticInit27b0b0862303aa1ea9a72608569c0611
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -12,9 +12,9 @@ class ComposerStaticInit80c68858c71d5d941a458f1966b0deaf
         '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         '3919eeb97e98d4648304477f8ef734ba' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/Crypt/Random.php',
-        'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
@@ -74,6 +74,7 @@ class ComposerStaticInit80c68858c71d5d941a458f1966b0deaf
         'L' => 
         array (
             'League\\Flysystem\\' => 17,
+            'Laravel\\Tinker\\' => 15,
         ),
         'I' => 
         array (
@@ -213,6 +214,10 @@ class ComposerStaticInit80c68858c71d5d941a458f1966b0deaf
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
         ),
+        'Laravel\\Tinker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/tinker/src',
+        ),
         'Illuminate\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate',
@@ -329,30 +334,37 @@ class ComposerStaticInit80c68858c71d5d941a458f1966b0deaf
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\GolonganModel' => __DIR__ . '/../..' . '/app/GolonganModel.php',
+        'App\\Http\\Controllers\\APIController' => __DIR__ . '/../..' . '/app/Http/Controllers/APIController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\GolonganController' => __DIR__ . '/../..' . '/app/Http/Controllers/GolonganController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\JabatanController' => __DIR__ . '/../..' . '/app/Http/Controllers/JabatanController.php',
+        'App\\Http\\Controllers\\KategoriLemburController' => __DIR__ . '/../..' . '/app/Http/Controllers/KategoriLemburController.php',
+        'App\\Http\\Controllers\\LemburPegawaiController' => __DIR__ . '/../..' . '/app/Http/Controllers/LemburPegawaiController.php',
+        'App\\Http\\Controllers\\PegawaiController' => __DIR__ . '/../..' . '/app/Http/Controllers/PegawaiController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Http\\Middleware\\authJWT' => __DIR__ . '/../..' . '/app/Http/Middleware/authJWT.php',
+        'App\\JabatanModel' => __DIR__ . '/../..' . '/app/JabatanModel.php',
+        'App\\KategoriLemburModel' => __DIR__ . '/../..' . '/app/KategoriLemburModel.php',
+        'App\\LemburPegawaiModel' => __DIR__ . '/../..' . '/app/LemburPegawaiModel.php',
+        'App\\PegawaiModel' => __DIR__ . '/../..' . '/app/PegawaiModel.php',
+        'App\\PenggajianModel' => __DIR__ . '/../..' . '/app/PenggajianModel.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\TunjanganModel' => __DIR__ . '/../..' . '/app/TunjanganModel.php',
+        'App\\TunjanganPegawaiModel' => __DIR__ . '/../..' . '/app/TunjanganPegawaiModel.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
-        'App\\golonganModel' => __DIR__ . '/../..' . '/app/golonganModel.php',
-        'App\\jabatanModel' => __DIR__ . '/../..' . '/app/jabatanModel.php',
-        'App\\kategori_lemburModel' => __DIR__ . '/../..' . '/app/kategori_lemburModel.php',
-        'App\\lembur_pegawaiModel' => __DIR__ . '/../..' . '/app/lembur_pegawaiModel.php',
-        'App\\pegawaiModel' => __DIR__ . '/../..' . '/app/pegawaiModel.php',
-        'App\\penggajianModel' => __DIR__ . '/../..' . '/app/penggajianModel.php',
-        'App\\tunjanganModel' => __DIR__ . '/../..' . '/app/tunjanganModel.php',
-        'App\\tunjangan_pegawaiModel' => __DIR__ . '/../..' . '/app/tunjangan_pegawaiModel.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
         'Carbon\\Exceptions\\InvalidDateException' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',
@@ -379,14 +391,6 @@ class ComposerStaticInit80c68858c71d5d941a458f1966b0deaf
         'Collective\\Html\\HtmlFacade' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlFacade.php',
         'Collective\\Html\\HtmlServiceProvider' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlServiceProvider.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-        'CreateTableGolongan' => __DIR__ . '/../..' . '/database/migrations/2017_01_30_090229_create_table_golongan.php',
-        'CreateTableJabatan' => __DIR__ . '/../..' . '/database/migrations/2017_01_30_085521_create_table_jabatan.php',
-        'CreateTableLemburKategoriLembur' => __DIR__ . '/../..' . '/database/migrations/2017_01_30_101126_create_table_lembur_kategori_lembur.php',
-        'CreateTableLemburPegawai' => __DIR__ . '/../..' . '/database/migrations/2017_01_30_095303_create_table_lembur_pegawai.php',
-        'CreateTablePegawai' => __DIR__ . '/../..' . '/database/migrations/2017_01_30_094622_create_table_pegawai.php',
-        'CreateTablePenggajian' => __DIR__ . '/../..' . '/database/migrations/2017_01_30_102914_create_table_penggajian.php',
-        'CreateTableTunjangan' => __DIR__ . '/../..' . '/database/migrations/2017_01_30_092350_create_table_tunjangan.php',
-        'CreateTableTunjanganPegawai' => __DIR__ . '/../..' . '/database/migrations/2017_01_30_102247_create_table_tunjangan_pegawai.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/AbstractField.php',
         'Cron\\CronExpression' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/CronExpression.php',
@@ -851,6 +855,7 @@ class ComposerStaticInit80c68858c71d5d941a458f1966b0deaf
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
         'File_X509' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/File/X509.php',
+        'Golongans' => __DIR__ . '/../..' . '/database/migrations/2017_02_08_043734_golongans.php',
         'Hamcrest\\Arrays\\IsArray' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArray.php',
         'Hamcrest\\Arrays\\IsArrayContaining' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArrayContaining.php',
         'Hamcrest\\Arrays\\IsArrayContainingInAnyOrder' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArrayContainingInAnyOrder.php',
@@ -1545,9 +1550,14 @@ class ComposerStaticInit80c68858c71d5d941a458f1966b0deaf
         'Illuminate\\View\\View' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/View.php',
         'Illuminate\\View\\ViewFinderInterface' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewFinderInterface.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
+        'Jabatans' => __DIR__ . '/../..' . '/database/migrations/2017_02_08_043656_jabatans.php',
         'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
+        'KategoriLemburs' => __DIR__ . '/../..' . '/database/migrations/2017_02_08_043832_kategori_lemburs.php',
+        'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
+        'Laravel\\Tinker\\TinkerCaster' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerCaster.php',
+        'Laravel\\Tinker\\TinkerServiceProvider' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerServiceProvider.php',
         'League\\Flysystem\\AdapterInterface' => __DIR__ . '/..' . '/league/flysystem/src/AdapterInterface.php',
         'League\\Flysystem\\Adapter\\AbstractAdapter' => __DIR__ . '/..' . '/league/flysystem/src/Adapter/AbstractAdapter.php',
         'League\\Flysystem\\Adapter\\AbstractFtpAdapter' => __DIR__ . '/..' . '/league/flysystem/src/Adapter/AbstractFtpAdapter.php',
@@ -1592,6 +1602,7 @@ class ComposerStaticInit80c68858c71d5d941a458f1966b0deaf
         'League\\Flysystem\\Util\\ContentListingFormatter' => __DIR__ . '/..' . '/league/flysystem/src/Util/ContentListingFormatter.php',
         'League\\Flysystem\\Util\\MimeType' => __DIR__ . '/..' . '/league/flysystem/src/Util/MimeType.php',
         'League\\Flysystem\\Util\\StreamHasher' => __DIR__ . '/..' . '/league/flysystem/src/Util/StreamHasher.php',
+        'LemburPegawais' => __DIR__ . '/../..' . '/database/migrations/2017_02_08_043939_lembur_pegawais.php',
         'Math_BigInteger' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/Math/BigInteger.php',
         'Mockery' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
@@ -2156,6 +2167,8 @@ class ComposerStaticInit80c68858c71d5d941a458f1966b0deaf
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'Pegawais' => __DIR__ . '/../..' . '/database/migrations/2017_02_08_043913_pegawais.php',
+        'Penggajians' => __DIR__ . '/../..' . '/database/migrations/2017_02_08_044107_penggajians.php',
         'PhpParser\\Autoloader' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Autoloader.php',
         'PhpParser\\Builder' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Builder.php',
         'PhpParser\\BuilderAbstract' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/BuilderAbstract.php',
@@ -3229,6 +3242,8 @@ class ComposerStaticInit80c68858c71d5d941a458f1966b0deaf
         'System_SSH_Agent_Identity' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/System/SSH/Agent.php',
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
+        'TunjanganPegawais' => __DIR__ . '/../..' . '/database/migrations/2017_02_08_044042_tunjangan_pegawais.php',
+        'Tunjangans' => __DIR__ . '/../..' . '/database/migrations/2017_02_08_044018_tunjangans.php',
         'Tymon\\JWTAuth\\Blacklist' => __DIR__ . '/..' . '/tymon/jwt-auth/src/Blacklist.php',
         'Tymon\\JWTAuth\\Claims\\Audience' => __DIR__ . '/..' . '/tymon/jwt-auth/src/Claims/Audience.php',
         'Tymon\\JWTAuth\\Claims\\Claim' => __DIR__ . '/..' . '/tymon/jwt-auth/src/Claims/Claim.php',
@@ -3341,10 +3356,10 @@ class ComposerStaticInit80c68858c71d5d941a458f1966b0deaf
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit80c68858c71d5d941a458f1966b0deaf::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit80c68858c71d5d941a458f1966b0deaf::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit80c68858c71d5d941a458f1966b0deaf::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit80c68858c71d5d941a458f1966b0deaf::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit27b0b0862303aa1ea9a72608569c0611::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit27b0b0862303aa1ea9a72608569c0611::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit27b0b0862303aa1ea9a72608569c0611::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit27b0b0862303aa1ea9a72608569c0611::$classMap;
 
         }, null, ClassLoader::class);
     }
