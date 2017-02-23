@@ -46,7 +46,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b><i class="fa fa-money"></i>&nbsp;&nbsp;Payroll</b></span>
+      <span class="logo-lg"><b><i class="fa fa"></i>&nbsp;&nbsp;Payroll</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -101,55 +101,55 @@
         <li class="header"><center>HB24</center></li>
         <li class="active treeview">
           <a href="{{ url('/Jabatan')}}">
-            <i class="fa fa-dashboard"></i> <span>JABATAN</span>
+            <i class="fa fa-"></i> <span>JABATAN</span>
           </a>
         </li>
 
          <li class="treeview">
           <a href="{{ url('/Golongan')}}">
-            <i class="fa fa-group"></i> <span>GOLONGAN</span>
+            <i class="fa fa-"></i> <span>GOLONGAN</span>
           </a>
         </li>
 
          <li class="treeview">
           <a href="{{ url('/Kategorilembur')}}">
-            <i class="fa fa-dashboard"></i> <span>KATEGORI LEMBUR</span>
+            <i class="fa fa-"></i> <span>KATEGORI LEMBUR</span>
           </a>
         </li>
 
          <li class="treeview">
           <a href="{{ url('/Pegawai')}}">
-            <i class="fa fa-user"></i> <span>PEGAWAI</span>
+            <i class="fa fa-"></i> <span>PEGAWAI</span>
           </a>
         </li>
 
          <li class="treeview">
           <a href="{{ url('/ShowPegawai')}}">
-            <i class="fa fa-users"></i> <span>PEGAWAI(Khusus Dilihat oleh Pegawai)</span>
+            <i class="fa fa-"></i> <span>PEGAWAI(Khusus Dilihat oleh Pegawai)</span>
           </a>
         </li>
 
          <li class="treeview">
           <a href="{{ url('/Lemburpegawai')}}">
-            <i class="fa fa-users"></i> <span>LEMBUR PEGAWAI</span>
+            <i class="fa fa-"></i> <span>LEMBUR PEGAWAI</span>
           </a>
         </li>
        
        <li class="treeview">
           <a href="{{ url('/Tunjangan')}}">
-            <i class="fa fa-credit-card"></i> <span>TUNJANGAN</span>
+            <i class="fa fa"></i> <span>TUNJANGAN</span>
           </a>
         </li>
 
         <li class="treeview">
           <a href="{{ url('/Tunjanganpegawai')}}">
-            <i class="fa fa-credit-card"></i> <span>TUNJANGAN PEGAWAI</span>
+            <i class="fa fa"></i> <span>TUNJANGAN PEGAWAI</span>
           </a>
         </li>
 
         <li class="treeview">
           <a href="{{ url('/Penggajian')}}">
-            <i class="fa fa-money"></i> <span>PENGGAJIAN</span>
+            <i class="fa fa"></i> <span>PENGGAJIAN</span>
           </a>
         </li>
 
@@ -170,7 +170,7 @@
           <!-- /.box -->
          
           <!-- Calendar -->
-          <div class="box box-solid bg-light-blue-gradient">
+          <div class="box box-solid bg-red">
          
             
             <div class="box-footer text-black">
